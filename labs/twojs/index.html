@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Two.js Experiments - Labs - StanOSmith</title>
+</head>
+<body>
+
+  <div id="draw-shapes">
+    <div class="two-container"></div>
+  </div>
+  <div id="draw-animation">
+    <div class="two-container"></div>
+  </div>
+
+  <script type="text/javascript" src="two.js"></script>
+  <script type="text/javascript">
+
+    /* Draw shapes */
+
+    drawShapes = function () {
+      // Make an instance of two and place it on the page.
+      var elem = document.getElementById('draw-shapes').children[0];
+      var two = new Two({ width: 285, height: 200 }).appendTo(elem);
+
+      // two has convenience methods to create shapes.
+      var circle = two.makeCircle(-70, 0, 50);
+      var rect = two.makeRectangle(70, 0, 100, 100);
+      circle.fill = '#ff8000';
+      circle.stroke = 'orangered';// Accepts all valid css color values
+      rect.fill = 'rgba(0, 200, 255, 0.75)';
+      rect.stroke = '#1c75bc';
+
+      // Groups can take an array of shapes and/or groups
+      var group = two.makeGroup(circle, rect);
+
+      // And have translation, rotation, scale like all shapes
+      group.translation.set(two.width / 2, two.height / 2);
+      group.rotation = Math.PI;
+      group.scale = 0.75;
+
+      // You can also set the same properties shapes have
+      group.linewidth = 7;
+
+      // Tell two to render
+      two.update();
+    };
+
+
+
+    /* Animation */
+
+    animateShapes = function () {
+      // Make an instance of two and place it on the page.
+      var elem = document.getElementById('draw-animation').children[0];
+      var two = new Two({ width: 400, height: 300 }).appendTo(elem);
+
+      // two has convenience methods to create shapes.
+      var circle = two.makeCircle(-70, 0, 50);
+      var rect = two.makeRectangle(70, 0, 100, 100);
+      circle.fill = '#ff8000';
+      rect.fill = 'rgba(0, 200, 255, 0.75)';
+
+      // Groups can take an array of shapes and/or groups
+      var group = two.makeGroup(circle, rect);
+
+      // And have translation, rotation, scale like all shapes
+      group.translation.set(two.width / 2, two.height / 2);
+      group.scale = 0;
+      group.noStroke();
+
+      // Bind a function to scale and rotate the group
+      two.bind('update', function (frameCount) {
+        // This code is called every time two.update() is called
+        // Effectively 60 times per second
+        if (group.scale > 0.9999) {
+          group.scale = group.rotation = 0;
+        }
+
+        var transform = (1 - group.scale) * 0.125;
+        group.scale += transform;
+        group.rotation += transform * 4 * Math.PI;
+      })
+      .play(); // Start the animation loop
+    };
+
+
+    drawShapes();
+    animateShapes();
+
+  </script>
+
+</body>
+</html>
