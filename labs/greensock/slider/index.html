@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <title>Greensock Animations</title>
+
+  <link rel="stylesheet" href="bower_components/normalize.css/normalize.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body ng-controller="MainController">
+
+
+  <div class="slider">
+    <div class="slide-container">
+      <div class="slide" ng-repeat="slide in slides" screen-width>
+        <img ng-src="{{ slide.imageUrl }}" screen-width>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="bower_components/gsap/src/minified/TweenMax.min.js"></script>
+  <script src="bower_components/gsap/src/minified/TimelineMax.min.js"></script>
+
+  <script src="app.js"></script>
+
+
+</body>
+</html>
